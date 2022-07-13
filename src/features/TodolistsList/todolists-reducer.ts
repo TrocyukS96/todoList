@@ -9,6 +9,7 @@ export const fetchTodolistsTC = createAsyncThunk('todolists/fetchTodolistsTC', a
     dispatch,
     rejectWithValue
 }) => {
+    debugger
     dispatch(setAppStatusAC({status: 'loading'}))
     const res = await todolistsAPI.getTodolists()
     try {

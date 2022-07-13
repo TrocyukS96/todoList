@@ -30,8 +30,7 @@ function App({demo = false}: PropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
     if (!isInitialized) {
-        return <div
-            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+        return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
     }
@@ -65,7 +64,7 @@ function App({demo = false}: PropsType) {
                     <Route path="/" element={<TodolistsList demo={demo}/>}/>
                     <Route path="login" element={<Login/>}/>
                     <Route path="/404" element={<h1>404: PAGE NOT FOUND</h1>}/>
-                    <Route path="*" element={<Navigate to='/404'/>}/>
+                    {/*<Route path="*" element={<Navigate to='/404'/>}/>*/}
                 </Routes>
                 {/*<TodolistsList demo={demo}/>*/}
             </Container>
