@@ -1,19 +1,23 @@
 import {todolistsAPI, TodolistType} from '../../api/todolists-api'
-import {RequestStatusType, setAppStatusAC} from '../../app/app-reducer'
+import {RequestStatusType,} from '../../app/app-reducer'
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {appActions} from "../CommonActions/App";
 
 const initialState: Array<TodolistDomainType> = []
+
+const {setAppStatus} = appActions
 
 //thunks
 export const fetchTodolistsTC = createAsyncThunk('todolists/fetchTodolistsTC', async (param, {
     dispatch,
     rejectWithValue
+
 }) => {
     debugger
-    dispatch(setAppStatusAC({status: 'loading'}))
+    dispatch(setAppStatus({status: 'loading'}))
     const res = await todolistsAPI.getTodolists()
     try {
-        dispatch(setAppStatusAC({status: 'succeeded'}))
+        dispatch(setAppStatus({status: 'succeeded'}))
         return {todolists: res.data}
     } catch (e) {
         return rejectWithValue(null)
@@ -23,11 +27,11 @@ export const removeTodolistTC = createAsyncThunk('todolists/removeTodolistTC', a
     dispatch,
     rejectWithValue
 }) => {
-    dispatch(setAppStatusAC({status: 'loading'}))
+    dispatch(setAppStatus({status: 'loading'}))
     dispatch(changeTodolistEntityStatusAC({id: todolistId, status: 'loading'}))
     const res = await todolistsAPI.deleteTodolist(todolistId)
     try {
-        dispatch(setAppStatusAC({status: 'succeeded'}))
+        dispatch(setAppStatus({status: 'succeeded'}))
         return {id: todolistId}
     } catch (e) {
         return rejectWithValue(null)
@@ -37,11 +41,11 @@ export const addTodolistTC = createAsyncThunk('todolists/addTodolistTC', async (
     dispatch,
     rejectWithValue
 }) => {
-    dispatch(setAppStatusAC({status: 'loading'}))
+    dispatch(setAppStatus({status: 'loading'}))
     const res = await todolistsAPI.createTodolist(title)
     try {
 
-        dispatch(setAppStatusAC({status: 'succeeded'}))
+        dispatch(setAppStatus({status: 'succeeded'}))
         return{todolist: res.data.data.item}
     } catch (e) {
         return rejectWithValue(null)

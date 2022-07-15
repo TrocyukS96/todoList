@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {FormikHelpers, useFormik} from 'formik';
 import {useSelector} from "react-redux";
-import {loginTC} from "./auth-reducer";
+import {login} from "./auth-reducer";
 import {AppRootStateType, useAppDispatch} from "../../app/store";
 import {Navigate} from "react-router-dom";
 
@@ -26,8 +26,8 @@ type FormValuesType = {
     rememberMe: boolean
 }
 export const Login = () => {
-
-    let islogin = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    debugger
+    let isLogin = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch()
     const formik = useFormik({
         initialValues: {
@@ -47,13 +47,13 @@ export const Login = () => {
             }
             return errors;
         },
-        onSubmit:async(values, formikHelpers:FormikHelpers<FormValuesType>)  => {
-            const action = await dispatch(loginTC(values))
-            if(loginTC.rejected.match(action)){
-                if(action.payload?.fieldsErrors){
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
+            const action = await dispatch(login(values))
+            if (login.rejected.match(action)) {
+                if (action.payload?.fieldsErrors) {
                     const error = action.payload?.fieldsErrors[0]
                     formikHelpers.setFieldError(error.field, error.error)
-                }else{
+                } else {
 
                 }
             }
@@ -62,9 +62,11 @@ export const Login = () => {
         },
     })
 
-    if(islogin){
-       return  <Navigate to='/'/>
+    if (isLogin) {
+        return <Navigate to='/'/>
     }
+
+    console.log(isLogin)
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
             <form onSubmit={formik.handleSubmit}>

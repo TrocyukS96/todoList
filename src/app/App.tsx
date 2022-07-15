@@ -15,7 +15,7 @@ import {Menu} from '@mui/icons-material';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "../features/login/Login";
-import { LogOutTC} from "../features/login/auth-reducer";
+import { LogOut} from "../features/login/auth-reducer";
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress'
 
 type PropsType = {
@@ -24,18 +24,25 @@ type PropsType = {
 
 function App({demo = false}: PropsType) {
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(initializeAppTC())
-    }, [])
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
+    let isLogin = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
+
+    useEffect(() => {
+        if(!demo){
+            dispatch(initializeAppTC())
+        }
+    }, [])
+
+    const logOutHandler = ()=>{
+        dispatch(LogOut())
+    }
+
     if (!isInitialized) {
+        console.log('preloader app')
         return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
-    }
-    const onClickLogOut = ()=>{
-        dispatch(LogOutTC())
     }
     return (
         <div className="App">
@@ -48,8 +55,7 @@ function App({demo = false}: PropsType) {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    {/*<Button color="inherit">Login</Button>*/}
-                    {isInitialized && <Button onClick={onClickLogOut} color="inherit" style={{
+                    {isInitialized && <Button onClick={logOutHandler} color="inherit" style={{
                         position:'absolute',
                         top:'50%',
                         transform:'translateY(-50%)',
@@ -62,11 +68,8 @@ function App({demo = false}: PropsType) {
             <Container fixed>
                 <Routes>
                     <Route path="/" element={<TodolistsList demo={demo}/>}/>
-                    <Route path="login" element={<Login/>}/>
-                    <Route path="/404" element={<h1>404: PAGE NOT FOUND</h1>}/>
-                    {/*<Route path="*" element={<Navigate to='/404'/>}/>*/}
+                    <Route path="/login" element={<Login/>}/>
                 </Routes>
-                {/*<TodolistsList demo={demo}/>*/}
             </Container>
         </div>
     )
