@@ -5,7 +5,8 @@ import {handleAsyncServerAppError, handleAsyncServerNetworkError} from "../../ut
 
 const {setAppStatus} = appActions
 
-export const login = createAsyncThunk<undefined, LoginParamsType,
+
+const login = createAsyncThunk<undefined, LoginParamsType,
     { rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldErrorType> } }>('auth/login', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}))
     try {
@@ -21,7 +22,7 @@ export const login = createAsyncThunk<undefined, LoginParamsType,
         return handleAsyncServerNetworkError(err, thunkAPI)
     }
 })
-export const LogOut = createAsyncThunk('auth/LogOut', async (param, thunkAPI) => {
+ const logOut = createAsyncThunk('auth/LogOut', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}))
     try {
         const res = await authAPI.logOut()
@@ -37,7 +38,9 @@ export const LogOut = createAsyncThunk('auth/LogOut', async (param, thunkAPI) =>
     }
 })
 
-const slice = createSlice({
+export const asyncActions = {login,logOut}
+
+export const slice = createSlice({
     name: 'auth',
     initialState: {
         isLoggedIn: false
@@ -49,9 +52,6 @@ const slice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(login.fulfilled, (state) => {state.isLoggedIn = true})
-        builder.addCase(LogOut.fulfilled, (state) => {state.isLoggedIn = false})
+        builder.addCase(logOut.fulfilled, (state) => {state.isLoggedIn = false})
     }
 })
-export const authReducer = slice.reducer
-
-export const {setIsLoggedInAC} = slice.actions

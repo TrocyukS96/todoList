@@ -2,7 +2,6 @@ import React, {useEffect} from 'react'
 import './App.css'
 import {TodolistsList} from '../features/TodolistsList/TodolistsList'
 import {useDispatch, useSelector} from 'react-redux'
-import {AppRootStateType} from './store'
 import {initializeAppTC, RequestStatusType} from './app-reducer'
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,20 +12,23 @@ import Container from '@mui/material/Container';
 import LinearProgress from '@mui/material/LinearProgress';
 import {Menu} from '@mui/icons-material';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
-import {Navigate, Route, Routes} from "react-router-dom";
-import {Login} from "../features/login/Login";
-import { LogOut} from "../features/login/auth-reducer";
+import {Route, Routes} from "react-router-dom";
+
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress'
+import {authActions, authSelectors, Login} from "../features/Auth";
+import {useActions} from "../utils/redux-utils";
+import {AppRootStateType} from "../features/CommonActions/types";
 
 type PropsType = {
     demo?: boolean
 }
 
+
 function App({demo = false}: PropsType) {
     const dispatch = useDispatch()
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
-    let isLogin = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
+    const {logOut} = useActions(authActions)
 
     useEffect(() => {
         if(!demo){
@@ -35,7 +37,7 @@ function App({demo = false}: PropsType) {
     }, [])
 
     const logOutHandler = ()=>{
-        dispatch(LogOut())
+        dispatch(logOut())
     }
 
     if (!isInitialized) {
@@ -44,6 +46,7 @@ function App({demo = false}: PropsType) {
             <CircularProgress/>
         </div>
     }
+
     return (
         <div className="App">
             <ErrorSnackbar/>

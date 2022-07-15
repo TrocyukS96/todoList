@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {AppRootStateType} from '../../app/store'
 import {
     addTodolistTC,
     changeTodolistFilterAC,
@@ -17,6 +16,7 @@ import {AddItemForm} from '../../components/AddItemForm/AddItemForm'
 import {Todolist} from './Todolist/Todolist'
 import {Navigate} from "react-router-dom";
 import {asyncActions, TasksStateType} from "./tasks-reducer"
+import {AppRootStateType} from "../CommonActions/types";
 
 const {removeTask,addTask,updateTask,fetchTasks} = asyncActions
 
@@ -26,6 +26,7 @@ type PropsType = {
 
 export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
 
+    // @ts-ignore
     let isLogin = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)

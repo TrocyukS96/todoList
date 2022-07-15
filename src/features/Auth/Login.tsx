@@ -9,10 +9,9 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {FormikHelpers, useFormik} from 'formik';
 import {useSelector} from "react-redux";
-import {login} from "./auth-reducer";
-import {AppRootStateType, useAppDispatch} from "../../app/store";
 import {Navigate} from "react-router-dom";
-
+import {authActions, authSelectors} from "./index";
+import {useActions, useAppDispatch} from "../../utils/redux-utils";
 
 type FormikErrorType = {
     email?: string
@@ -26,9 +25,9 @@ type FormValuesType = {
     rememberMe: boolean
 }
 export const Login = () => {
-    debugger
-    let isLogin = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    let isLogin = useSelector(authSelectors.selectIsLoggedIn)
     const dispatch = useAppDispatch()
+    const {login} = useActions(authActions)
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -54,10 +53,8 @@ export const Login = () => {
                     const error = action.payload?.fieldsErrors[0]
                     formikHelpers.setFieldError(error.field, error.error)
                 } else {
-
                 }
             }
-
             formik.resetForm()
         },
     })

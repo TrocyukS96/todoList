@@ -1,6 +1,6 @@
 {
+  "name": "todolist",
   "homepage": "https://TrocyukS96.github.io/todoList/",
-  "name": "todo16v2",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
