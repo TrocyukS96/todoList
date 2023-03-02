@@ -1,9 +1,9 @@
-import {authAPI, FieldErrorType, LoginParamsType} from "../../api/todolists-api";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import { appActions } from "../CommonActions/App";
+import {authAPI, FieldErrorType, LoginParamsType} from "../../api/todolists-service";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {handleAsyncServerAppError, handleAsyncServerNetworkError} from "../../utils/error-utils";
+import {setIsLoggedIn} from "./actions";
+import {setAppStatus} from "../app/actions";
 
-const {setAppStatus} = appActions
 
 
 const login = createAsyncThunk<undefined, LoginParamsType,
@@ -45,13 +45,10 @@ export const slice = createSlice({
     initialState: {
         isLoggedIn: false
     },
-    reducers: {
-        setIsLoggedInAC(state, action: PayloadAction<{ value: boolean }>) {
-            state.isLoggedIn = action.payload.value
-        }
-    },
+    reducers: {},
     extraReducers: builder => {
         builder.addCase(login.fulfilled, (state) => {state.isLoggedIn = true})
         builder.addCase(logOut.fulfilled, (state) => {state.isLoggedIn = false})
+        builder.addCase(setIsLoggedIn, (state,action) => {state.isLoggedIn = action.payload.value})
     }
 })

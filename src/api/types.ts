@@ -1,4 +1,4 @@
-import { FieldErrorType } from "./todolists-api";
+import { FieldErrorType } from "./todolists-service";
 
 export type ResponseType<D = {}> = {
     resultCode: number
@@ -6,3 +6,4 @@ export type ResponseType<D = {}> = {
     fieldsErrors?: Array<FieldErrorType>
     data: D
 }
+

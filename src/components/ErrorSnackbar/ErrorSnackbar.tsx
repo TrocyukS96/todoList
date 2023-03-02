@@ -2,8 +2,8 @@ import React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { useDispatch, useSelector } from 'react-redux';
-import {appActions} from "../../features/CommonActions/App";
-import {AppRootStateType} from "../../features/CommonActions/types";
+import {AppRootStateType} from "../../features/Application/CommonActions/types";
+import {appActions} from "../../store/app";
 
 const {setAppError} = appActions
 

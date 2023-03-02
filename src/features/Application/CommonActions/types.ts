@@ -1,5 +1,5 @@
-import {rootReducer, store} from "../../app/store";
-import {FieldErrorType} from "../../api/todolists-api";
+import {rootReducer, store} from "../../../app/store";
+import {FieldErrorType} from "../../../api/todolists-service";
 
 export type RootReducerType = typeof rootReducer
 // определить автоматически тип всего объекта состояния

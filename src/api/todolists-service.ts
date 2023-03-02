@@ -9,7 +9,7 @@ const instance = axios.create({
 })
 
 // api
-export const todolistsAPI = {
+export const todolistsService = {
     getTodolists() {
         return instance.get<TodolistType[]>('todo-lists');
     },

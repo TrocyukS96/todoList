@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import {FormikHelpers, useFormik} from 'formik';
 import {useSelector} from "react-redux";
 import {Navigate} from "react-router-dom";
-import {authActions, authSelectors} from "./index";
+import {authActions, authSelectors} from "../../store/auth";
 import {useActions, useAppDispatch} from "../../utils/redux-utils";
 
 type FormikErrorType = {

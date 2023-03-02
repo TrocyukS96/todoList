@@ -1,7 +1,7 @@
 import {useDispatch} from 'react-redux'
 import {ActionCreatorsMapObject, bindActionCreators} from 'redux'
 import {useMemo} from 'react'
-import {AppDispatchType} from "../features/CommonActions/types";
+import {AppDispatchType} from "../features/Application/CommonActions/types";
 
 export const useAppDispatch = () => useDispatch<AppDispatchType>()
 
