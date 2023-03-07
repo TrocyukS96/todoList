@@ -1,4 +1,4 @@
-import {todolistsService, TodolistType} from '../../api/todolists-service'
+import {todoListsService, TodolistType} from '../../api/todo-lists-service'
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {RequestStatusType} from "../app";
 import {ThunkError} from "../../features/Application/CommonActions/types";
@@ -12,7 +12,7 @@ const initialState: Array<TodolistDomainType> = []
 //thunks
 const fetchTodoLists = createAsyncThunk<{ todoLists: TodolistType[] }, undefined, ThunkError>('todolists/fetchTodolistsTC', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}))
-    const res = await todolistsService.getTodolists()
+    const res = await todoListsService.getTodoLists()
     try {
         thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
         return {todoLists: res.data}
@@ -26,7 +26,6 @@ const fetchTodoLists = createAsyncThunk<{ todoLists: TodolistType[] }, undefined
 const removeTodolist = createAsyncThunk('todolists/removeTodolist', async (todolistId: string, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}))
     thunkAPI.dispatch(changeTodolistEntityStatus({id: todolistId, status: 'loading'}))
-    const res = await todolistsService.deleteTodolist(todolistId)
     try {
         thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
         return {id: todolistId}
@@ -36,7 +35,7 @@ const removeTodolist = createAsyncThunk('todolists/removeTodolist', async (todol
 })
 export const addTodolist = createAsyncThunk('todolists/addTodolistTC', async (title: string, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}))
-    const res = await todolistsService.createTodolist(title)
+    const res = await todoListsService.createTodolist(title)
     try {
 
         thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
@@ -46,10 +45,9 @@ export const addTodolist = createAsyncThunk('todolists/addTodolistTC', async (ti
     }
 })
 export const changeTodolistTitle = createAsyncThunk('todolists/changeTodolistTitleTC', async (param: { id: string, title: string }, {
-    dispatch,
-    rejectWithValue
+
 }) => {
-    await todolistsService.updateTodolist(param.id, param.title)
+    await todoListsService.updateTodolist(param.id, param.title)
     return {id: param.id, title: param.title}
 })
 

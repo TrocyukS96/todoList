@@ -6,7 +6,7 @@ import {
     TodolistDomainType,
 } from './todolists-slice'
 import {v1} from 'uuid'
-import {TodolistType} from '../../api/todolists-service'
+import {TodolistType} from '../../api/todo-lists-service'
 import {todoListsActions, todoListsReducer} from "./index";
 import {RequestStatusType} from "../app";
 

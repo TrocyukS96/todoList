@@ -2,9 +2,9 @@ import {
     TaskPriorities,
     TaskStatuses,
     TaskType,
-    todolistsService,
+    todoListsService,
     UpdateTaskModelType
-} from '../../api/todolists-service'
+} from '../../api/todo-lists-service'
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {handleAsyncServerAppError, handleAsyncServerNetworkError} from "../../utils/error-utils";
 import {AppRootStateType} from "../../features/Application/CommonActions/types";
@@ -16,22 +16,22 @@ const initialState: TasksStateType = {}
 //thunks
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (todolistId: string, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}))
-    const res = await todolistsService.getTasks(todolistId)
+    const res = await todoListsService.getTasks(todolistId)
     const tasks = res.data.items
     thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
     return {tasks, todolistId}
     //возвращаем всегда объект  который будет являться payload
 })
 //мета-данные - данные, которые приходят в санку через аргументы
-export const removeTask = createAsyncThunk('tasks/removeTask', (param: { taskId: string, todolistId: string }, thunkAPI) => {
-    return todolistsService.deleteTask(param.todolistId, param.taskId)
+export const removeTask = createAsyncThunk('tasks/removeTask', (param: { taskId: string, todolistId: string }) => {
+    return todoListsService.deleteTask(param.todolistId, param.taskId)
         .then(() => ({taskId: param.taskId, todolistId: param.todolistId}))
     //в этом случае санка обязана что-то возвращать, в данном случае - то, что зарезолвит промис
 })
 export const addTask = createAsyncThunk('tasks/addTaskTC', async (param: { title: string, todolistId: string }, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}))
     try {
-        const res = await todolistsService.createTask(param.todolistId, param.title)
+        const res = await todoListsService.createTask(param.todolistId, param.title)
         if (res.data.resultCode === 0) {
             thunkAPI.dispatch(setAppStatus({status: 'succeeded'}))
             return res.data.data.item
@@ -62,7 +62,7 @@ export const updateTask = createAsyncThunk('tasks/updateTask', async (param: { t
         ...param.model
     }
 
-    const res = await todolistsService.updateTask(param.todolistId, param.taskId, apiModel)
+    const res = await todoListsService.updateTask(param.todolistId, param.taskId, apiModel)
     try {
         if (res.data.resultCode === 0) {
             return param

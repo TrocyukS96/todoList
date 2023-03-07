@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import LinearProgress from '@mui/material/LinearProgress';
 import {Menu} from '@mui/icons-material';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress'
 import {authActions, Login} from "../store/auth";
@@ -29,10 +29,15 @@ function App({demo = false}: PropsType) {
     const status = useSelector(appSelectors.selectStatus)
     const isInitialized = useSelector(appSelectors.selectIsInitialized)
     const {logOut} = useActions(authActions)
+    const navigate = useNavigate()
 
     useEffect(() => {
         if(!demo){
             dispatch(initializeApp())
+        }
+        debugger
+        if(isInitialized){
+            navigate('/')
         }
     }, [demo,dispatch])
 

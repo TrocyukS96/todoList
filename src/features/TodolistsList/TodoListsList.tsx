@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {FilterValuesType, TodolistDomainType} from '../../store/todolist/todolists-slice'
-import {TaskStatuses} from '../../api/todolists-service'
+import {TaskStatuses} from '../../api/todo-lists-service'
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import {AddItemForm} from '../../components/AddItemForm/AddItemForm'

@@ -1,6 +1,6 @@
 import {addTask, fetchTasks, removeTask, tasksReducer, TasksStateType, updateTaskAC} from './tasks-slice'
 import {addTodolist, fetchTodoLists, removeTodolistTC} from '../todolist/todolists-slice'
-import {TaskPriorities, TaskStatuses} from '../../api/todolists-service'
+import {TaskPriorities, TaskStatuses} from '../../api/todo-lists-service'
 
 let startState: TasksStateType = {}
 beforeEach(() => {

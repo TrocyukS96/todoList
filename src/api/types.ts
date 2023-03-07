@@ -1,4 +1,4 @@
-import { FieldErrorType } from "./todolists-service";
+import { FieldErrorType } from "./todo-lists-service";
 
 export type ResponseType<D = {}> = {
     resultCode: number

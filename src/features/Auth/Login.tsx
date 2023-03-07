@@ -82,6 +82,7 @@ export const Login = () => {
                         <TextField
                             label="Email"
                             margin="normal"
+                            defaultValue={'trotzuk.stanislav@gmail.com'}
                             {...formik.getFieldProps('email')}
                         />
                         {formik.touched.email && formik.errors.email ? (
@@ -91,6 +92,7 @@ export const Login = () => {
                             type="password"
                             label="Password"
                             margin="normal"
+                            defaultValue={'resamstas'}
                             {...formik.getFieldProps('password')}
 
                         />

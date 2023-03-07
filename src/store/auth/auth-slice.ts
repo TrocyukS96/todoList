@@ -1,4 +1,4 @@
-import {authAPI, FieldErrorType, LoginParamsType} from "../../api/todolists-service";
+import {authAPI, FieldErrorType, LoginParamsType} from "../../api/todo-lists-service";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {handleAsyncServerAppError, handleAsyncServerNetworkError} from "../../utils/error-utils";
 import {setIsLoggedIn} from "./actions";
@@ -22,7 +22,7 @@ const login = createAsyncThunk<undefined, LoginParamsType,
         return handleAsyncServerNetworkError(err, thunkAPI)
     }
 })
- const logOut = createAsyncThunk('auth/LogOut', async (param, thunkAPI) => {
+ const logOut = createAsyncThunk('auth/LogOut', async ({}, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}))
     try {
         const res = await authAPI.logOut()
